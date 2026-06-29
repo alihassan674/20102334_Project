@@ -1,5 +1,6 @@
 import { useState, type ChangeEvent, type FormEvent } from "react";
 import { FaXmark } from "react-icons/fa6";
+import { useStore } from "~/store/store";
 
 interface FormData {
   name: string;
@@ -10,7 +11,7 @@ const initialFormState: FormData = {
 }
 
 export default function AddHostelModal({ isOpen, onClose }: { isOpen: boolean, onClose: () => void }) {
-
+  const addHostel = useStore((state) => state.addHostel);
   const [formData, setFormData] = useState<FormData>(initialFormState);
 
   function handleChange(e: ChangeEvent<HTMLInputElement>) {
@@ -20,7 +21,8 @@ export default function AddHostelModal({ isOpen, onClose }: { isOpen: boolean, o
 
   function submitHandle(e: FormEvent) {
     e.preventDefault();
-    console.log(formData);
+    addHostel(formData.name);
+    setFormData(initialFormState);
     onClose();
   }
 

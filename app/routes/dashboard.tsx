@@ -1,9 +1,12 @@
 import { useState } from "react";
 import { FaPlus } from "react-icons/fa6";
+import { useStore } from "~/store/store";
 import AddHostelModal from "~/components/AddHostelModal";
 
 export default function Dashboard() {
     const [isAddHostelModalOpen, setIsAddHostelModalOpen] = useState(false);
+    const hostels = useStore(state => state.hostels);
+    console.log("hostels", hostels);
 
     return (
         <div>
@@ -24,6 +27,10 @@ export default function Dashboard() {
                 onClose={() => setIsAddHostelModalOpen(false)}
             />
 
+            <div className="bg-red-300">
+
+            </div>
+
         </div>
     );
 }
@@ -31,7 +38,7 @@ export default function Dashboard() {
 function Header() {
     return (
         <nav className="w-full bg-[#362421] p-4">
-            <div className="text-2xl font-bold text-white ">Lodgely</div>
+            <div className="text-2xl font-bold text-white">Lodgely</div>
         </nav>
     );
 }
