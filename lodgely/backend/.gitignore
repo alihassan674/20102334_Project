@@ -1,0 +1,19 @@
+# Node modules
+node_modules/
+
+# TypeScript compilation output
+dist/
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+lerna-debug.log*
+.pnpm-debug.log*
+
+# Prisma Studio database schema files
+*.db
+*.db-journal
+
+# (Note: .env files are intentionally not ignored so they can be uploaded)
+# .env
