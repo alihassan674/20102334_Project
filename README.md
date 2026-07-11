@@ -28,4 +28,5 @@ Reference: https://nextjs.org/docs/app/getting-started/installation
 3) Write create hostel form in frontend myself with 
 4) then i created backend using their official website express example
 Reference: https://expressjs.com/en/5x/starter/installing/
-
+5) then i setup prisma orm with the help of Chatgpt and setup database and seed some data
+Reference: https://chatgpt.com/share/6a527d46-c574-83e8-80b6-7a347fc66e1d

@@ -23,7 +23,7 @@ app.post("/api/addhostel", async (req, res) => {
         const hostel = await prisma.hostel.create({
             data: {
                 hostelName,
-                hostelFloors,
+                hostelFloors: parseInt(hostelFloors, 10),
                 hostelAddress,
             },
         });
