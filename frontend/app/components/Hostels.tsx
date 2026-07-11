@@ -1,11 +1,13 @@
 "use client";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 export default function Hostels() {
     const [hostelName, setHostelName] = useState("");
     const [hostelFloors, setHostelFloors] = useState("");
     const [hostelAddress, setHostelAddress] = useState("");
+    const [allHostels, setAllHostels] = useState([]);
 
+    // function called when we wanna add hostel 
     async function handleAddHostel(e: React.FormEvent) {
         e.preventDefault();
         const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
@@ -23,7 +25,24 @@ export default function Hostels() {
         });
         const data = await response.json();
         console.log(data);
+        fetchHostels();
     }
+
+    // hostel data getting api function 
+    async function fetchHostels() {
+        const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
+        const response = await fetch(`${backendUrl}/api/hostels`);
+        if (!response.ok) return;
+        const data = await response.json();
+        setAllHostels(data.hostels);
+    }
+
+    // This effecct is called when application starts and save data comming from database to allHostels state and show below
+    useEffect(() => {
+        fetchHostels();
+    }, []);
+
+
     return (
         <div className="p-8">
             {/* Add Hostel section */}
@@ -31,7 +50,7 @@ export default function Hostels() {
                 <input
                     type="text"
                     placeholder="Enter Hostel Name"
-                    className="border rounded-md p-2"
+                    className="border rounded-md p-2 text-black"
                     required
                     value={hostelName}
                     onChange={(e) => setHostelName(e.target.value)}
@@ -39,7 +58,7 @@ export default function Hostels() {
                 <input
                     type="number"
                     placeholder="Enter Total Floors"
-                    className="border rounded-md p-2 "
+                    className="border rounded-md p-2 text-black"
                     required
                     min={1}
                     value={hostelFloors}
@@ -48,7 +67,7 @@ export default function Hostels() {
                 <input
                     type="text"
                     placeholder="Enter Address"
-                    className="border rounded-md p-2 "
+                    className="border rounded-md p-2 text-black"
                     required
                     value={hostelAddress}
                     onChange={(e) => setHostelAddress(e.target.value)}
@@ -57,6 +76,24 @@ export default function Hostels() {
                     Add Hostel
                 </button>
             </form>
+
+            {/* Hostel Card are shown here */}
+            <div className="mt-8 w-1/2 mx-auto">
+                <h2 className="text-xl font-bold mb-4 text-black">All Hostels</h2>
+                {allHostels && allHostels.length > 0 ? (
+                    <div className="flex flex-col gap-4">
+                        {allHostels.map((hostel: any) => (
+                            <div key={hostel.id} className="border rounded-md p-4 bg-white shadow-sm flex flex-col gap-1 text-black">
+                                <h3 className="text-lg font-semibold">{hostel.hostelName}</h3>
+                                <p className="text-sm text-gray-600">Floors: {hostel.hostelFloors}</p>
+                                <p className="text-sm text-gray-600">Address: {hostel.hostelAddress}</p>
+                            </div>
+                        ))}
+                    </div>
+                ) : (
+                    <p className="text-gray-500">No hostels found.</p>
+                )}
+            </div>
 
         </div>
     );

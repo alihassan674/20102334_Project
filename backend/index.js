@@ -42,6 +42,23 @@ app.post("/api/addhostel", async (req, res) => {
     }
 });
 
+app.get("/api/hostels", async (req, res) => {
+    try {
+        const hostels = await prisma.hostel.findMany();
+        res.status(200).json({
+            success: true,
+            hostels,
+        });
+    } catch (error) {
+        console.error(error);
+
+        res.status(500).json({
+            success: false,
+            message: "Something went wrong",
+        });
+    }
+});
+
 
 // --- Start Server ---
 app.listen(PORT, () => {
