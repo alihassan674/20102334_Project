@@ -1,0 +1,59 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Get a free hosted Postgres database in seconds: `npx create-db`
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model Hostel {
+  id             Int      @id @default(autoincrement())
+  hostelName     String
+  hostelFloors   Int
+  hostelAddress  String
+
+  rooms          Room[]
+
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+}
+
+model Room {
+  id            Int      @id @default(autoincrement())
+  roomNumber    String
+  floorNumber   Int
+  capacity      Int
+
+  hostelId      Int
+  hostel        Hostel  @relation(fields: [hostelId], references: [id], onDelete: Cascade)
+
+  students      Student[]
+
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  @@unique([hostelId, roomNumber])
+}
+
+model Student {
+  id            Int      @id @default(autoincrement())
+
+  firstName     String
+  lastName      String
+  registrationNo String  @unique
+  department    String
+
+  phone         String?
+  email         String?  @unique
+
+  roomId        Int?
+  room          Room?    @relation(fields: [roomId], references: [id], onDelete: SetNull)
+
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+}
