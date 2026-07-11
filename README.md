@@ -21,7 +21,11 @@ Backend is built using express.js, which is Node.js framework.
 Database is built using postgresql
 
 ====================== (2) Procedure of making the project: ===============================
+
 1) I initialized frontend setup of Nextjs using `npx create-next-app@latest frontend --yes`, which inititalized nextjs with typescript, tailwindcss, App router, and with all other necessary dependencies.
 Reference: https://nextjs.org/docs/app/getting-started/installation
 2) Removed unwanted file from code that code by Default
 3) Write create hostel form in frontend myself with 
+4) then i created backend using their official website express example
+Reference: https://expressjs.com/en/5x/starter/installing/
+
