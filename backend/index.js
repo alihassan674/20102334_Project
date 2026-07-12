@@ -144,6 +144,26 @@ app.delete("/api/rooms/:id", async (req, res) => {
     });
 });
 
+// this api will delete student from hostel 
+app.delete("/api/students/:id", async (req, res) => {
+
+    // take studentid from frontend 
+    const studentId = Number(req.params.id);
+
+    // delete database record on base of that id 
+    await prisma.student.delete({
+        where: {
+            id: studentId,
+        },
+    });
+
+    // return a repsone of ok 
+    return res.status(200).json({
+        success: true,
+        message: "Student deleted successfully.",
+    });
+});
+
 // --- Start Server ---
 app.listen(PORT, () => {
     console.log(`Server is running on http://localhost:${PORT}`);

@@ -77,7 +77,7 @@ export default function Students() {
 
                             <div className="flex justify-end">
                                 <button className="bg-red-700 text-white font-medium border rounded-md p-2" onClick={(e) => { e.stopPropagation(); handleDeleteStudent(student.id) }}>
-                                    Delete Room
+                                    Delete Student
                                 </button>
                             </div>
                         </div>
