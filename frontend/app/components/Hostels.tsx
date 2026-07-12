@@ -1,4 +1,5 @@
 "use client";
+import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
 export default function Hostels() {
@@ -6,6 +7,7 @@ export default function Hostels() {
     const [hostelFloors, setHostelFloors] = useState("");
     const [hostelAddress, setHostelAddress] = useState("");
     const [allHostels, setAllHostels] = useState([]);
+    const router = useRouter();
 
     // function called when we wanna add hostel 
     async function handleAddHostel(e: React.FormEvent) {
@@ -83,7 +85,7 @@ export default function Hostels() {
                 {allHostels && allHostels.length > 0 ? (
                     <div className="flex flex-col gap-4">
                         {allHostels.map((hostel: any) => (
-                            <div key={hostel.id} className="border rounded-md p-4 bg-white shadow-sm flex flex-col gap-1 text-black">
+                            <div key={hostel.id} className="border rounded-md p-4 bg-white shadow-sm flex flex-col gap-1 text-black" onClick={() => router.push(`/rooms`)}>
                                 <h3 className="text-lg font-semibold">{hostel.hostelName}</h3>
                                 <p className="text-sm text-gray-600">Floors: {hostel.hostelFloors}</p>
                                 <p className="text-sm text-gray-600">Address: {hostel.hostelAddress}</p>

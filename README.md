@@ -30,3 +30,10 @@ Reference: https://nextjs.org/docs/app/getting-started/installation
 Reference: https://expressjs.com/en/5x/starter/installing/
 5) then i setup prisma orm with the help of Chatgpt and setup database and seed some data
 Reference: https://chatgpt.com/share/6a527d46-c574-83e8-80b6-7a347fc66e1d
+6) now i wrote code to fetch all hostels and made cards to shown on homepage, and faced a dyhyderation and solve it with adding `suppressHydrationWarning` in layout file
+Reference: https://chatgpt.com/share/6a52a0fc-018c-83ee-8279-68b2e59f2266
+7) Now all hostels are showing in homepage, now i m going to add a feature , when i click hostel all room insdide it should shown, and url should update with new url, for this i learned about routing from greekforgeeks
+REference:
+https://www.geeksforgeeks.org/reactjs/next-js-routing/ ,
+https://www.google.com/search?q=how+get+parameter+value+in+nextjs&oq=how+get+parameter+value+in+nextjs&gs_lcrp=EgZjaHJvbWUyBggAEEUYOdIBCTEwMjgzajBqNKgCALACAA&sourceid=chrome&ie=UTF-8 ,
+https://share.google/aimode/iv3bjyTOiPEXtYXoM
