@@ -33,10 +33,12 @@ export default function Hostels() {
     async function handleDeleteHostel(id: number) {
         console.log("delete handler")
         const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
-        // const response = await fetch(`${backendUrl}/api/deletehostel/${id}`);
-        // if (!response.ok) return;
-        // console.log("fetching after deleting");
-        // fetchHostels();
+        const response = await fetch(`${backendUrl}/api/deletehostel/${id}`, {
+            method: "DELETE",
+        });
+        if (!response.ok) return;
+        console.log("fetching after deleting");
+        fetchHostels();
     }
 
     // hostel data getting api function 
