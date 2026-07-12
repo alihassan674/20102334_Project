@@ -40,4 +40,6 @@ https://share.google/aimode/iv3bjyTOiPEXtYXoM
 8) implemented get api inside backedn for fetching all romms when i passed hostelid with it, api help from 
 Reference: https://chatgpt.com/share/6a535d12-a39c-83e8-b066-450f0639f77d
 9) now api data is shown inside rooms page with using map to show array data
+10) implemented the functionality when i click room , user moves to student page of that room
+
 
