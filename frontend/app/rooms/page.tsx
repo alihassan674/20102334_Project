@@ -60,6 +60,7 @@ export default function Rooms() {
 
     return (
         <div className="mt-8 w-1/2 mx-auto">
+            {/* This form is used to create new room  */}
             <form className="flex flex-col gap-2 w-1/2 mx-auto" onSubmit={handleAddRoom}>
                 <input
                     type="text"
