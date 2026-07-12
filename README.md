@@ -41,5 +41,6 @@ https://share.google/aimode/iv3bjyTOiPEXtYXoM
 Reference: https://chatgpt.com/share/6a535d12-a39c-83e8-b066-450f0639f77d
 9) now api data is shown inside rooms page with using map to show array data
 10) implemented the functionality when i click room , user moves to student page of that room
-
-
+11) added delete button inside hostel, but when i clicked delete button,  faced a issue of opening detail of hostel , instead of calling delete button function so learned abbout propogation and implemented it 
+Reference: https://www.w3schools.com/jsref/event_stoppropagation.asp
+12)     
