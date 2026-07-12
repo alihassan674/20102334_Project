@@ -33,6 +33,7 @@ export default function Students() {
         }
     }, [roomId]);
 
+    // This function will delete student from databas 
     async function handleDeleteStudent(studentId) {
         console.log("delete handler");
         const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
@@ -43,6 +44,7 @@ export default function Students() {
 
     }
 
+    // This handle function is used to create studnet 
     const handleAddStudent = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
@@ -63,6 +65,8 @@ export default function Students() {
                 }),
             }
         );
+        if (!response.ok) return;
+        fetchStudents();
     };
 
 

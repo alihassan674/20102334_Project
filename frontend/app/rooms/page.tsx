@@ -48,7 +48,13 @@ export default function Rooms() {
                 capacity: Number(capacity),
             }),
         });
-
+        if (!response.ok) return;
+        // clear form fields after successful submit
+        setRoomNumber("");
+        setFloorNumber("");
+        setCapacity("");
+        // refresh rooms list
+        fetchRooms();
     };
 
     // This effect w'll fetch all room inside that hostel WITH THAT HOSTEL ID

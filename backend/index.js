@@ -186,6 +186,45 @@ app.post("/api/hostels/:hostelId/rooms", async (req, res) => {
     });
 });
 
+// this api will create student inside room
+app.post("/api/hostels/:hostelId/rooms/:roomId/students", async (req, res) => {
+    try {
+        const roomId = Number(req.params.roomId);
+        const {
+            firstName,
+            lastName,
+            registrationNo,
+            department,
+            phone,
+            email,
+        } = req.body;
+
+        const student = await prisma.student.create({
+            data: {
+                firstName,
+                lastName,
+                registrationNo,
+                department,
+                phone: phone || null,
+                email: email || null,
+                roomId,
+            },
+        });
+
+        return res.status(201).json({
+            success: true,
+            message: "Student created successfully.",
+            student,
+        });
+    } catch (error) {
+        console.error(error);
+        return res.status(500).json({
+            success: false,
+            message: "Something went wrong",
+        });
+    }
+});
+
 // --- Start Server ---
 app.listen(PORT, () => {
     console.log(`Server is running on http://localhost:${PORT}`);
