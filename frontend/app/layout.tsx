@@ -18,7 +18,14 @@ export default function RootLayout({
       className={`h-full`}
       suppressHydrationWarning
     >
-      <body className="min-h-full flex flex-col">{children}</body>
+      <body className="min-h-full flex flex-col">
+        {/* Header */}
+        <div className="text-center bg-blue-900 text-white p-4">
+          <h1 className="text-2xl font-bold">Lodgely</h1>
+          <p>Hostel Management System</p>
+        </div>
+        {children}
+      </body>
     </html>
   );
 }

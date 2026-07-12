@@ -8,6 +8,9 @@ export default function Rooms() {
     const hostelId = searchParams.get("hostelId");
     const [rooms, setRooms] = useState([]);
     const router = useRouter();
+    const [roomNumber, setRoomNumber] = useState("");
+    const [floorNumber, setFloorNumber] = useState("");
+    const [capacity, setCapacity] = useState("");
 
 
     // this function is used to fetch all rooms of specific hostel 
@@ -20,6 +23,7 @@ export default function Rooms() {
         console.log("All rooms: ", data.rooms);
     }
 
+    // this function is used to delete room 
     async function handleDeleteRoom(roomId: number) {
         console.log("delete handler");
         const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
@@ -28,6 +32,34 @@ export default function Rooms() {
         console.log("fetching after deleting");
         fetchRooms();
     }
+
+    const handleAddRoom = async (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
+
+        const response = await fetch(`${backendUrl}/api/hostels/${hostelId}/rooms`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                roomNumber,
+                floorNumber: Number(floorNumber),
+                capacity: Number(capacity),
+            }),
+        });
+
+        const data = await response.json();
+
+        if (response.ok) {
+            alert("Room added successfully");
+
+            setRoomNumber("");
+            setFloorNumber("");
+            setCapacity("");
+        } else {
+            alert(data.message || "Failed to add room");
+        }
+    };
 
     // This effect w'll fetch all room inside that hostel WITH THAT HOSTEL ID
     useEffect(() => {
@@ -38,6 +70,44 @@ export default function Rooms() {
 
     return (
         <div className="mt-8 w-1/2 mx-auto">
+            <form className="flex flex-col gap-2 w-1/2 mx-auto" onSubmit={handleAddRoom}>
+                <input
+                    type="text"
+                    placeholder="Enter Room Number"
+                    className="border rounded-md p-2 text-black"
+                    required
+                    value={roomNumber}
+                    onChange={(e) => setRoomNumber(e.target.value)}
+                />
+
+                <input
+                    type="number"
+                    placeholder="Enter Floor Number"
+                    className="border rounded-md p-2 text-black"
+                    required
+                    min={1}
+                    value={floorNumber}
+                    onChange={(e) => setFloorNumber(e.target.value)}
+                />
+
+                <input
+                    type="number"
+                    placeholder="Enter Room Capacity"
+                    className="border rounded-md p-2 text-black"
+                    required
+                    min={1}
+                    value={capacity}
+                    onChange={(e) => setCapacity(e.target.value)}
+                />
+
+                <button
+                    className="bg-green-700 text-white font-medium border rounded-md p-2"
+                    type="submit"
+                >
+                    Add Room
+                </button>
+            </form>
+
             <h2 className="text-xl font-bold mb-4 text-black">All Rooms</h2>
 
             {/* this map will show all rooms inside that hostel  */}
