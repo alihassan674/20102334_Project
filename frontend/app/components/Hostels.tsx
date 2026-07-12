@@ -30,6 +30,15 @@ export default function Hostels() {
         fetchHostels();
     }
 
+    async function handleDeleteHostel(id: number) {
+        console.log("delete handler")
+        const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
+        const response = await fetch(`${backendUrl}/api/deletehostel/${id}`);
+        if (!response.ok) return;
+        console.log("fetching after deleting");
+        fetchHostels();
+    }
+
     // hostel data getting api function 
     async function fetchHostels() {
         const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
@@ -82,10 +91,16 @@ export default function Hostels() {
             {/* Hostel Card are shown here */}
             <div className="mt-8 w-1/2 mx-auto">
                 <h2 className="text-xl font-bold mb-4 text-black">All Hostels</h2>
+                {/* map to show all hostel below  */}
                 {allHostels && allHostels.length > 0 ? (
                     <div className="flex flex-col gap-4">
                         {allHostels.map((hostel: any) => (
                             <div key={hostel.id} className="border rounded-md p-4 bg-white shadow-sm flex flex-col gap-1 text-black" onClick={() => router.push(`/rooms?hostelId=${hostel.id}`)}>
+                                <div className="flex justify-end">
+                                    <button className="bg-red-700 text-white font-medium border rounded-md p-2" onClick={(e) => { e.stopPropagation(); handleDeleteHostel(hostel.id) }}>
+                                        Delete Hostel
+                                    </button>
+                                </div>
                                 <h3 className="text-lg font-semibold">{hostel.hostelName}</h3>
                                 <p className="text-sm text-gray-600">Floors: {hostel.hostelFloors}</p>
                                 <p className="text-sm text-gray-600">Address: {hostel.hostelAddress}</p>
