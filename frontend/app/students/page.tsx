@@ -27,6 +27,16 @@ export default function Students() {
         }
     }, [roomId]);
 
+    async function handleDeleteStudent(studentId) {
+        console.log("delete handler");
+        const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
+        const response = await fetch(`${backendUrl}/api/students/${studentId}`, { method: "DELETE" });
+        if (!response.ok) return;
+        console.log("fetching after deleting");
+        fetchStudents();
+
+    }
+
 
     return (
         <div className="mt-8 w-1/2 mx-auto">
@@ -64,6 +74,12 @@ export default function Students() {
                                 <span className="font-medium">Phone:</span>{" "}
                                 {student.phone}
                             </p>
+
+                            <div className="flex justify-end">
+                                <button className="bg-red-700 text-white font-medium border rounded-md p-2" onClick={(e) => { e.stopPropagation(); handleDeleteStudent(student.id) }}>
+                                    Delete Room
+                                </button>
+                            </div>
                         </div>
                     ))}
                 </div>

@@ -49,15 +49,15 @@ export default function Rooms() {
                             className="border rounded-md p-4 bg-white shadow-sm flex flex-col gap-2 text-black"
                             onClick={() => router.push(`/students?roomId=${room.id}&hostelId=${hostelId}`)}
                         >
+                            <h3 className="text-lg font-semibold">Room {room.roomNumber}</h3>
+                            <p className="text-sm text-gray-600">Floor: {room.floorNumber}</p>
+                            <p className="text-sm text-gray-600">Capacity: {room.capacity}</p>
+                            <p className="text-sm text-gray-600">Students: {room.students.length} / {room.capacity}</p>
                             <div className="flex justify-end">
                                 <button className="bg-red-700 text-white font-medium border rounded-md p-2" onClick={(e) => { e.stopPropagation(); handleDeleteRoom(room.id) }}>
                                     Delete Room
                                 </button>
                             </div>
-                            <h3 className="text-lg font-semibold">Room {room.roomNumber}</h3>
-                            <p className="text-sm text-gray-600">Floor: {room.floorNumber}</p>
-                            <p className="text-sm text-gray-600">Capacity: {room.capacity}</p>
-                            <p className="text-sm text-gray-600">Students: {room.students.length} / {room.capacity}</p>
                         </div>
                     ))}
                 </div>
