@@ -124,6 +124,26 @@ app.delete("/api/deletehostel/:id", async (req, res) => {
     });
 });
 
+// this api will delete room from hostel 
+app.delete("/api/rooms/:id", async (req, res) => {
+
+    // take roomid from frontend 
+    const roomId = Number(req.params.id);
+
+    // delete database record on base of that id 
+    await prisma.room.delete({
+        where: {
+            id: roomId,
+        },
+    });
+
+    // return a repsone of ok 
+    return res.status(200).json({
+        success: true,
+        message: "Room deleted successfully.",
+    });
+});
+
 // --- Start Server ---
 app.listen(PORT, () => {
     console.log(`Server is running on http://localhost:${PORT}`);

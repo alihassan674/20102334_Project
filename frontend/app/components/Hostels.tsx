@@ -30,6 +30,7 @@ export default function Hostels() {
         fetchHostels();
     }
 
+    // when i click delete button on hostel, this function del the hostel 
     async function handleDeleteHostel(id: number) {
         console.log("delete handler")
         const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL;

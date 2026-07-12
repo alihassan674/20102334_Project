@@ -6,7 +6,7 @@ In this Readme file,
 
 
 
-====================== (1) About Project: ===============================
+====================== (1) About Project: =============================
 
 Introduction:
 Lodgely is website to help university hostel manangement , This website help you to manage universtiy hostel, room, and students. This website help you to get rid of paperwork, and manual records of students and rooms. You can manage your hostel, room, and students in a systematic way.
@@ -20,7 +20,7 @@ Backend is built using express.js, which is Node.js framework.
 3) database:
 Database is built using postgresql
 
-====================== (2) Procedure of making the project: ===============================
+=============== (2) Procedure of making the project: ===================
 
 1) I initialized frontend setup of Nextjs using `npx create-next-app@latest frontend --yes`, which inititalized nextjs with typescript, tailwindcss, App router, and with all other necessary dependencies.
 Reference: https://nextjs.org/docs/app/getting-started/installation
@@ -43,4 +43,6 @@ Reference: https://chatgpt.com/share/6a535d12-a39c-83e8-b066-450f0639f77d
 10) implemented the functionality when i click room , user moves to student page of that room
 11) added delete button inside hostel, but when i clicked delete button,  faced a issue of opening detail of hostel , instead of calling delete button function so learned abbout propogation and implemented it 
 Reference: https://www.w3schools.com/jsref/event_stoppropagation.asp
-12)     
+12) Worked on implemented delete api of hostel based on hostelId in backend and called from fronted delete button
+Reference: https://chatgpt.com/s/t_6a539389eeec8191805d256068bb434e
+13) i copied the same logic i wrote for deleting hostel and pasted for deleting rooms

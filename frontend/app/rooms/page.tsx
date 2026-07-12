@@ -10,6 +10,7 @@ export default function Rooms() {
     const router = useRouter();
 
 
+    // this function is used to fetch all rooms of specific hostel 
     async function fetchRooms() {
         const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
         const response = await fetch(`${backendUrl}/api/hostels/${hostelId}/rooms`);
@@ -17,6 +18,15 @@ export default function Rooms() {
         const data = await response.json();
         setRooms(data.rooms);
         console.log("All rooms: ", data.rooms);
+    }
+
+    async function handleDeleteRoom(roomId: number) {
+        console.log("delete handler");
+        const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
+        const response = await fetch(`${backendUrl}/api/rooms/${roomId}`, { method: "DELETE" });
+        if (!response.ok) return;
+        console.log("fetching after deleting");
+        fetchRooms();
     }
 
     // This effect w'll fetch all room inside that hostel WITH THAT HOSTEL ID
@@ -39,6 +49,11 @@ export default function Rooms() {
                             className="border rounded-md p-4 bg-white shadow-sm flex flex-col gap-2 text-black"
                             onClick={() => router.push(`/students?roomId=${room.id}&hostelId=${hostelId}`)}
                         >
+                            <div className="flex justify-end">
+                                <button className="bg-red-700 text-white font-medium border rounded-md p-2" onClick={(e) => { e.stopPropagation(); handleDeleteRoom(room.id) }}>
+                                    Delete Room
+                                </button>
+                            </div>
                             <h3 className="text-lg font-semibold">Room {room.roomNumber}</h3>
                             <p className="text-sm text-gray-600">Floor: {room.floorNumber}</p>
                             <p className="text-sm text-gray-600">Capacity: {room.capacity}</p>
