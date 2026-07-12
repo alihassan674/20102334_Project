@@ -1,11 +1,13 @@
 "use client";
 import { useSearchParams } from "next/navigation"
+import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react"
 
 export default function Rooms() {
     const searchParams = useSearchParams();
     const hostelId = searchParams.get("hostelId");
     const [rooms, setRooms] = useState([]);
+    const router = useRouter();
 
 
     async function fetchRooms() {
@@ -35,6 +37,7 @@ export default function Rooms() {
                         <div
                             key={room.id}
                             className="border rounded-md p-4 bg-white shadow-sm flex flex-col gap-2 text-black"
+                            onClick={() => router.push(`/students?roomId=${room.id}&hostelId=${hostelId}`)}
                         >
                             <h3 className="text-lg font-semibold">Room {room.roomNumber}</h3>
                             <p className="text-sm text-gray-600">Floor: {room.floorNumber}</p>
