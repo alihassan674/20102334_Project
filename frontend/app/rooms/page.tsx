@@ -33,9 +33,10 @@ export default function Rooms() {
         fetchRooms();
     }
 
+    // this function is used when add room form send data to create room in that hostel  
     const handleAddRoom = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-
+        const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
         const response = await fetch(`${backendUrl}/api/hostels/${hostelId}/rooms`, {
             method: "POST",
             headers: {
@@ -48,17 +49,6 @@ export default function Rooms() {
             }),
         });
 
-        const data = await response.json();
-
-        if (response.ok) {
-            alert("Room added successfully");
-
-            setRoomNumber("");
-            setFloorNumber("");
-            setCapacity("");
-        } else {
-            alert(data.message || "Failed to add room");
-        }
     };
 
     // This effect w'll fetch all room inside that hostel WITH THAT HOSTEL ID

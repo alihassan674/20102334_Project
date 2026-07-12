@@ -164,6 +164,28 @@ app.delete("/api/students/:id", async (req, res) => {
     });
 });
 
+// rhis api will create room inside hostel
+app.post("/api/hostels/:hostelId/rooms", async (req, res) => {
+    // taking room id and hostel id from frontend
+    const hostelId = Number(req.params.hostelId);
+    const { roomNumber, floorNumber, capacity } = req.body;
+
+    // this will create  room inside specific hostel
+    const room = await prisma.room.create({
+        data: {
+            roomNumber,
+            floorNumber: Number(floorNumber),
+            capacity: Number(capacity),
+            hostelId,
+        },
+    });
+
+    return res.status(201).json({
+        message: "Room created successfully.",
+        room,
+    });
+});
+
 // --- Start Server ---
 app.listen(PORT, () => {
     console.log(`Server is running on http://localhost:${PORT}`);

@@ -46,3 +46,4 @@ Reference: https://www.w3schools.com/jsref/event_stoppropagation.asp
 12) Worked on implemented delete api of hostel based on hostelId in backend and called from fronted delete button
 Reference: https://chatgpt.com/s/t_6a539389eeec8191805d256068bb434e
 13) i copied the same logic i wrote for deleting hostel and pasted for deleting rooms
+14) copied add hostel form modified it and added room form in rooms page
