@@ -16,5 +16,5 @@ RUN npx prisma generate
 
 EXPOSE 5000
 
-# Run migrations then start server
-CMD ["sh", "-c", "npx prisma migrate deploy && node index.js"]
+# Run migrations, seed the DB, then start server
+CMD ["sh", "-c", "npx prisma migrate deploy && npx prisma db seed && node index.js"]
