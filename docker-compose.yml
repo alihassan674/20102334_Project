@@ -46,13 +46,13 @@ services:
       args:
         # NEXT_PUBLIC_* must be baked in at build time for Next.js
         # On the VM run: export VM_IP=<your-external-ip>  then  docker compose up --build
-        NEXT_PUBLIC_BACKEND_URL: http://${VM_IP:-localhost}:5000/api/v1
+        NEXT_PUBLIC_BACKEND_URL: http://34.118.181.224:5000/api/v1
     container_name: lodgely_frontend
     restart: unless-stopped
     depends_on:
       - backend
     environment:
-      NEXT_PUBLIC_BACKEND_URL: http://${VM_IP:-localhost}:5000/api/v1
+      NEXT_PUBLIC_BACKEND_URL: http://34.118.181.224:5000/api/v1
     ports:
       - "3000:3000"
 
