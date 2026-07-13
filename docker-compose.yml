@@ -44,8 +44,7 @@ services:
       context: ./frontend
       dockerfile: Dockerfile
       args:
-        # NEXT_PUBLIC_* must be baked in at build time for Next.js
-        # On the VM run: export VM_IP=<your-external-ip>  then  docker compose up --build
+        # VM external IP is baked into the Next.js bundle at build time
         NEXT_PUBLIC_BACKEND_URL: http://34.118.181.224:5000/api/v1
     container_name: lodgely_frontend
     restart: unless-stopped
