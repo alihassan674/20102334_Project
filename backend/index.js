@@ -254,6 +254,38 @@ app.put("/api/updatehostel/:id", async (req, res) => {
     });
 });
 
+// this api will update room data with new data 
+app.put("/api/rooms/:id", async (req, res) => {
+
+    // getting id of room from frontend api request url
+    const { id } = req.params;
+
+    // taking updated data from frontend form data
+    const {
+        roomNumber,
+        floorNumber,
+        capacity,
+    } = req.body;
+
+    // update room data in 
+    const updatedRoom = await prisma.room.update({
+        where: {
+            id: Number(id),
+        },
+        data: {
+            roomNumber,
+            floorNumber: Number(floorNumber),
+            capacity: Number(capacity),
+        },
+    });
+
+    return res.status(200).json({
+        success: true,
+        message: "Room updated successfully",
+        room: updatedRoom,
+    });
+});
+
 // --- Start Server ---
 app.listen(PORT, () => {
     console.log(`Server is running on http://localhost:${PORT}`);
