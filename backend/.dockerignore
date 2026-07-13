@@ -1,0 +1,4 @@
+node_modules
+.env
+prisma_generate_out.log
+*.log

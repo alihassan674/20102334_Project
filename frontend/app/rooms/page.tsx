@@ -1,9 +1,9 @@
 "use client";
 import { useSearchParams } from "next/navigation"
 import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react"
+import { useEffect, useState, Suspense } from "react"
 
-export default function Rooms() {
+function RoomsContent() {
     const router = useRouter();
     // gettting url queryis to know which hostel rooms we have to fetch 
     const searchParams = useSearchParams();
@@ -231,4 +231,12 @@ export default function Rooms() {
             )}
         </div>
     )
+}
+
+export default function Rooms() {
+    return (
+        <Suspense fallback={<p className="text-gray-500 text-center mt-8">Loading...</p>}>
+            <RoomsContent />
+        </Suspense>
+    );
 }

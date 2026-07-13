@@ -1,14 +1,16 @@
 "use client";
 import { useSearchParams } from "next/navigation";
 import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useEffect, useState, Suspense } from "react";
 
-export default function Students() {
+function StudentsContent() {
+    // values comming from url 
     const searchParams = useSearchParams();
     const hostelId = searchParams.get("hostelId");
     const roomId = searchParams.get("roomId");
-    const [students, setStudents] = useState([]);
     const router = useRouter();
+    // state for create student form 
+    const [students, setStudents] = useState([]);
     const [firstName, setFirstName] = useState("");
     const [lastName, setLastName] = useState("");
     const [registrationNo, setRegistrationNo] = useState("");
@@ -43,7 +45,7 @@ export default function Students() {
     }, [roomId]);
 
     // This function will delete student from databas 
-    async function handleDeleteStudent(studentId) {
+    async function handleDeleteStudent(studentId: number) {
         console.log("delete handler");
         const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
         const response = await fetch(`${backendUrl}/api/students/${studentId}`, { method: "DELETE" });
@@ -302,4 +304,12 @@ export default function Students() {
             )}
         </div>
     )
+}
+
+export default function Students() {
+    return (
+        <Suspense fallback={<p className="text-gray-500 text-center mt-8">Loading...</p>}>
+            <StudentsContent />
+        </Suspense>
+    );
 }

@@ -1,0 +1,57 @@
+version: "3.9"
+
+services:
+
+  # ─── PostgreSQL Database ───────────────────────────────────────────────
+  db:
+    image: postgres:16-alpine
+    container_name: lodgely_db
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: admin
+      POSTGRES_DB: lodgely
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d lodgely"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # ─── Express / Prisma Backend ─────────────────────────────────────────
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: lodgely_backend
+    restart: unless-stopped
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      # Connects to the 'db' service defined above (hostname = service name)
+      DATABASE_URL: postgresql://postgres:admin@db:5432/lodgely?schema=public
+      PORT: 5000
+    ports:
+      - "5000:5000"
+
+  # ─── Next.js Frontend ─────────────────────────────────────────────────
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: lodgely_frontend
+    restart: unless-stopped
+    depends_on:
+      - backend
+    environment:
+      # The browser calls this URL, so it must be localhost (not the service name)
+      NEXT_PUBLIC_BACKEND_URL: http://localhost:5000
+    ports:
+      - "3000:3000"
+
+volumes:
+  postgres_data:
