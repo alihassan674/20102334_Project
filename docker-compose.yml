@@ -43,18 +43,13 @@ services:
     build:
       context: ./frontend
       dockerfile: Dockerfile
-      args:
-        # Pass the VM external IP at build time so Next.js bakes it in.
-        # Set VM_IP before running: export VM_IP=<your-vm-external-ip>
-        # On Windows CMD:          set VM_IP=<your-vm-external-ip>
-        NEXT_PUBLIC_BACKEND_URL: http://34.118.181.224:5000/api/v1
     container_name: lodgely_frontend
     restart: unless-stopped
     depends_on:
       - backend
     environment:
-      # Runtime env var (only useful for SSR; build-time arg above handles CSR)
-      NEXT_PUBLIC_BACKEND_URL: http://34.118.181.224:5000/api/v1
+      # The browser calls this URL, so it must be localhost (not the service name)
+      NEXT_PUBLIC_BACKEND_URL: http://localhost:5000/api/v1
     ports:
       - "3000:3000"
 
