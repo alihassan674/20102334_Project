@@ -47,5 +47,7 @@ Reference: https://www.w3schools.com/jsref/event_stoppropagation.asp
 Reference: https://chatgpt.com/s/t_6a539389eeec8191805d256068bb434e
 13) i copied the same logic i wrote for deleting hostel and pasted for deleting rooms
 14) copied add hostel form modified it and added room form in rooms page
-15) Took help from chatgpt to implement hostel form 
+15) Took help from chatgpt to implement edit hostel form 
 Reference: https://chatgpt.com/s/t_6a5409d761e481918e2cbf21b8c5efea
+16) implemenent edit hostel api in backend for updating hostel data 
+Reference: https://chatgpt.com/s/t_6a546104cfd4819187b4ad85ab2a71ee

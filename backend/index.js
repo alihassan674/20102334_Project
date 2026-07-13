@@ -188,41 +188,70 @@ app.post("/api/hostels/:hostelId/rooms", async (req, res) => {
 
 // this api will create student inside room
 app.post("/api/hostels/:hostelId/rooms/:roomId/students", async (req, res) => {
-    try {
-        const roomId = Number(req.params.roomId);
-        const {
+
+    // taking room id and hostel id from frontend
+    const roomId = Number(req.params.roomId);
+    const {
+        firstName,
+        lastName,
+        registrationNo,
+        department,
+        phone,
+        email,
+    } = req.body;
+
+    // create student in room
+    const student = await prisma.student.create({
+        data: {
             firstName,
             lastName,
             registrationNo,
             department,
-            phone,
-            email,
-        } = req.body;
+            phone: phone || null,
+            email: email || null,
+            roomId,
+        },
+    });
 
-        const student = await prisma.student.create({
-            data: {
-                firstName,
-                lastName,
-                registrationNo,
-                department,
-                phone: phone || null,
-                email: email || null,
-                roomId,
-            },
-        });
+    // send response 
+    return res.status(201).json({
+        success: true,
+        message: "Student created successfully.",
+        student,
 
-        return res.status(201).json({
-            success: true,
-            message: "Student created successfully.",
-            student,
-        });
-    } catch (error) {
-        console.error(error);
-        return res.status(500).json({
-            success: false,
-            message: "Something went wrong",
-        });
-    }
+    });
+});;
+
+// this api will update hostel data with new data 
+app.put("/api/updatehostel/:id", async (req, res) => {
+
+    // getting id of hostel from frontend api request url
+    const { id } = req.params;
+
+    // taking updated data from frontend form data
+    const {
+        hostelName,
+        hostelFloors,
+        hostelAddress,
+    } = req.body;
+
+    // update hostel data in 
+    const updatedHostel = await prisma.hostel.update({
+        where: {
+            id: Number(id),
+        },
+        data: {
+            hostelName,
+            hostelFloors: Number(hostelFloors),
+            hostelAddress,
+        },
+    });
+
+    return res.status(200).json({
+        success: true,
+        message: "Hostel updated successfully",
+        hostel: updatedHostel,
+    });
 });
 
 // --- Start Server ---
