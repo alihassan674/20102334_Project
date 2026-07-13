@@ -34,7 +34,7 @@ app.post("/api/v1/addhostel", async (req, res) => {
     res.status(201).json({
         success: true,
         hostel,
-    }); s
+    });
 });
 
 
