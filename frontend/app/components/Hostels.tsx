@@ -23,7 +23,7 @@ export default function Hostels() {
         e.preventDefault();
         const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
 
-        const response = await fetch(`${backendUrl}/api/addhostel`, {
+        const response = await fetch(`${backendUrl}/addhostel`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
@@ -43,7 +43,7 @@ export default function Hostels() {
     async function handleDeleteHostel(id: number) {
         console.log("delete handler")
         const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
-        const response = await fetch(`${backendUrl}/api/deletehostel/${id}`, {
+        const response = await fetch(`${backendUrl}/deletehostel/${id}`, {
             method: "DELETE",
         });
         if (!response.ok) return;
@@ -54,7 +54,7 @@ export default function Hostels() {
     // hostel data getting api function 
     async function fetchHostels() {
         const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
-        const response = await fetch(`${backendUrl}/api/hostels`);
+        const response = await fetch(`${backendUrl}/hostels`);
         if (!response.ok) return;
         const data = await response.json();
         setAllHostels(data.hostels);
@@ -78,7 +78,7 @@ export default function Hostels() {
         e.preventDefault();
         const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
         const response = await fetch(
-            `${backendUrl}/api/updatehostel/${editingId}`,
+            `${backendUrl}/updatehostel/${editingId}`,
             {
                 method: "PUT",
                 headers: {

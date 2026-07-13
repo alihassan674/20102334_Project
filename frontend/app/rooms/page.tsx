@@ -25,7 +25,7 @@ function RoomsContent() {
     // this function is used to fetch all rooms of specific hostel 
     async function fetchRooms() {
         const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
-        const response = await fetch(`${backendUrl}/api/hostels/${hostelId}/rooms`);
+        const response = await fetch(`${backendUrl}/hostels/${hostelId}/rooms`);
         if (!response.ok) return;
         const data = await response.json();
         setRooms(data.rooms);
@@ -36,7 +36,7 @@ function RoomsContent() {
     async function handleDeleteRoom(roomId: number) {
         console.log("delete handler");
         const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
-        const response = await fetch(`${backendUrl}/api/rooms/${roomId}`, { method: "DELETE" });
+        const response = await fetch(`${backendUrl}/rooms/${roomId}`, { method: "DELETE" });
         if (!response.ok) return;
         console.log("fetching after deleting");
         fetchRooms();
@@ -46,7 +46,7 @@ function RoomsContent() {
     const handleAddRoom = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
-        const response = await fetch(`${backendUrl}/api/hostels/${hostelId}/rooms`, {
+        const response = await fetch(`${backendUrl}/hostels/${hostelId}/rooms`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
@@ -78,7 +78,7 @@ function RoomsContent() {
     const handleUpdateRoom = async (e: React.FormEvent) => {
         e.preventDefault();
         const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
-        const response = await fetch(`${backendUrl}/api/rooms/${editingRoomId}`, {
+        const response = await fetch(`${backendUrl}/rooms/${editingRoomId}`, {
             method: "PUT",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({

@@ -30,7 +30,7 @@ function StudentsContent() {
     // This function fetch all student data based on hostelId and roomId
     async function fetchStudents() {
         const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
-        const response = await fetch(`${backendUrl}/api/hostels/${hostelId}/rooms/${roomId}/students`);
+        const response = await fetch(`${backendUrl}/hostels/${hostelId}/rooms/${roomId}/students`);
         if (!response.ok) return;
         const data = await response.json();
         setStudents(data.students);
@@ -48,7 +48,7 @@ function StudentsContent() {
     async function handleDeleteStudent(studentId: number) {
         console.log("delete handler");
         const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
-        const response = await fetch(`${backendUrl}/api/students/${studentId}`, { method: "DELETE" });
+        const response = await fetch(`${backendUrl}/students/${studentId}`, { method: "DELETE" });
         if (!response.ok) return;
         console.log("fetching after deleting");
         fetchStudents();
@@ -60,7 +60,7 @@ function StudentsContent() {
         e.preventDefault();
         const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
         const response = await fetch(
-            `${backendUrl}/api/hostels/${hostelId}/rooms/${roomId}/students`,
+            `${backendUrl}/hostels/${hostelId}/rooms/${roomId}/students`,
             {
                 method: "POST",
                 headers: {
@@ -95,7 +95,7 @@ function StudentsContent() {
     const handleUpdateStudent = async (e: React.FormEvent) => {
         e.preventDefault();
         const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
-        const response = await fetch(`${backendUrl}/api/students/${editingStudentId}`, {
+        const response = await fetch(`${backendUrl}/students/${editingStudentId}`, {
             method: "PUT",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({

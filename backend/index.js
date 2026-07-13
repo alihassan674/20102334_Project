@@ -13,7 +13,7 @@ app.use(express.urlencoded({ extended: true })); // Parses URL-encoded data
 // --- Routes ---
 
 // This will create a new hostel 
-app.post("/api/addhostel", async (req, res) => {
+app.post("/api/v1/addhostel", async (req, res) => {
     // getting data comming from frontend 
     const {
         hostelName,
@@ -39,7 +39,7 @@ app.post("/api/addhostel", async (req, res) => {
 
 
 // This will give all hostel saved inside database 
-app.get("/api/hostels", async (req, res) => {
+app.get("/api/v1/hostels", async (req, res) => {
     // getting all hostels from database 
     const hostels = await prisma.hostel.findMany();
 
@@ -52,7 +52,7 @@ app.get("/api/hostels", async (req, res) => {
 
 
 // This will give all roomms inside one hostel 
-app.get("/api/hostels/:hostelId/rooms", async (req, res) => {
+app.get("/api/v1/hostels/:hostelId/rooms", async (req, res) => {
     // getting all rooms of specific hostel 
     const hostel = await prisma.hostel.findUnique({
         // where is a condition, based on this condition record are fetched 
@@ -80,7 +80,7 @@ app.get("/api/hostels/:hostelId/rooms", async (req, res) => {
 
 
 // this api will return all students based upon roomId and hostelId 
-app.get("/api/hostels/:hostelId/rooms/:roomId/students", async (req, res) => {
+app.get("/api/v1/hostels/:hostelId/rooms/:roomId/students", async (req, res) => {
     // fetching data from frontend 
     const hostelId = Number(req.params.hostelId);
     const roomId = Number(req.params.roomId);
@@ -105,7 +105,7 @@ app.get("/api/hostels/:hostelId/rooms/:roomId/students", async (req, res) => {
 });
 
 // this api will delete hostel and cascade(below or related) rooms and students 
-app.delete("/api/deletehostel/:id", async (req, res) => {
+app.delete("/api/v1/deletehostel/:id", async (req, res) => {
 
     // take hostelid from frontend 
     const hostelId = Number(req.params.id);
@@ -125,7 +125,7 @@ app.delete("/api/deletehostel/:id", async (req, res) => {
 });
 
 // this api will delete room from hostel 
-app.delete("/api/rooms/:id", async (req, res) => {
+app.delete("/api/v1/rooms/:id", async (req, res) => {
 
     // take roomid from frontend 
     const roomId = Number(req.params.id);
@@ -145,7 +145,7 @@ app.delete("/api/rooms/:id", async (req, res) => {
 });
 
 // this api will delete student from hostel 
-app.delete("/api/students/:id", async (req, res) => {
+app.delete("/api/v1/students/:id", async (req, res) => {
 
     // take studentid from frontend 
     const studentId = Number(req.params.id);
@@ -165,7 +165,7 @@ app.delete("/api/students/:id", async (req, res) => {
 });
 
 // rhis api will create room inside hostel
-app.post("/api/hostels/:hostelId/rooms", async (req, res) => {
+app.post("/api/v1/hostels/:hostelId/rooms", async (req, res) => {
     // taking room id and hostel id from frontend
     const hostelId = Number(req.params.hostelId);
     const { roomNumber, floorNumber, capacity } = req.body;
@@ -187,7 +187,7 @@ app.post("/api/hostels/:hostelId/rooms", async (req, res) => {
 });
 
 // this api will create student inside room
-app.post("/api/hostels/:hostelId/rooms/:roomId/students", async (req, res) => {
+app.post("/api/v1/hostels/:hostelId/rooms/:roomId/students", async (req, res) => {
 
     // taking room id and hostel id from frontend
     const roomId = Number(req.params.roomId);
@@ -223,7 +223,7 @@ app.post("/api/hostels/:hostelId/rooms/:roomId/students", async (req, res) => {
 });;
 
 // this api will update hostel data with new data 
-app.put("/api/updatehostel/:id", async (req, res) => {
+app.put("/api/v1/updatehostel/:id", async (req, res) => {
 
     // getting id of hostel from frontend api request url
     const { id } = req.params;
@@ -255,7 +255,7 @@ app.put("/api/updatehostel/:id", async (req, res) => {
 });
 
 // this api will update room data with new data 
-app.put("/api/rooms/:id", async (req, res) => {
+app.put("/api/v1/rooms/:id", async (req, res) => {
 
     // getting id of room from frontend api request url
     const { id } = req.params;
@@ -287,7 +287,7 @@ app.put("/api/rooms/:id", async (req, res) => {
 });
 
 // this api will update student data with new data 
-app.put("/api/students/:id", async (req, res) => {
+app.put("/api/v1/students/:id", async (req, res) => {
 
     // getting id of student from frontend api request url
     const { id } = req.params;
