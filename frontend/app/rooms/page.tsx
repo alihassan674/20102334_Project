@@ -4,13 +4,22 @@ import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react"
 
 export default function Rooms() {
-    const searchParams = useSearchParams();
-    const hostelId = searchParams.get("hostelId");
-    const [rooms, setRooms] = useState([]);
     const router = useRouter();
+    // gettting url queryis to know which hostel rooms we have to fetch 
+    const searchParams = useSearchParams();
+    // getting targeted hostel id 
+    const hostelId = searchParams.get("hostelId");
+    // states to manage room create form 
+    const [rooms, setRooms] = useState([]);
     const [roomNumber, setRoomNumber] = useState("");
     const [floorNumber, setFloorNumber] = useState("");
     const [capacity, setCapacity] = useState("");
+    // states to managae edit form 
+    const [editingRoomId, setEditingRoomId] = useState<number | null>(null);
+    const [editRoomNumber, setEditRoomNumber] = useState("");
+    const [editFloorNumber, setEditFloorNumber] = useState("");
+    const [editCapacity, setEditCapacity] = useState("");
+
 
 
     // this function is used to fetch all rooms of specific hostel 
@@ -56,6 +65,34 @@ export default function Rooms() {
         // refresh rooms list
         fetchRooms();
     };
+
+    // this function opens the edit form for a room and fills it with current values
+    const handleEditRoom = (room: any) => {
+        setEditingRoomId(room.id);
+        setEditRoomNumber(room.roomNumber);
+        setEditFloorNumber(room.floorNumber.toString());
+        setEditCapacity(room.capacity.toString());
+    };
+
+    // this function sends the updated room data to the backend
+    const handleUpdateRoom = async (e: React.FormEvent) => {
+        e.preventDefault();
+        const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
+        const response = await fetch(`${backendUrl}/api/rooms/${editingRoomId}`, {
+            method: "PUT",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+                roomNumber: editRoomNumber,
+                floorNumber: Number(editFloorNumber),
+                capacity: Number(editCapacity),
+            }),
+        });
+        if (response.ok) {
+            await fetchRooms();
+            setEditingRoomId(null);
+        }
+    };
+
 
     // This effect w'll fetch all room inside that hostel WITH THAT HOSTEL ID
     useEffect(() => {
@@ -113,18 +150,79 @@ export default function Rooms() {
                     {rooms.map((room: any) => (
                         <div
                             key={room.id}
-                            className="border rounded-md p-4 bg-white shadow-sm flex flex-col gap-2 text-black"
-                            onClick={() => router.push(`/students?roomId=${room.id}&hostelId=${hostelId}`)}
+                            className="border rounded-md p-4 bg-white shadow-sm text-black"
+                            onClick={() => {
+                                if (editingRoomId === null) {
+                                    router.push(`/students?roomId=${room.id}&hostelId=${hostelId}`);
+                                }
+                            }}
                         >
-                            <h3 className="text-lg font-semibold">Room {room.roomNumber}</h3>
-                            <p className="text-sm text-gray-600">Floor: {room.floorNumber}</p>
-                            <p className="text-sm text-gray-600">Capacity: {room.capacity}</p>
-                            <p className="text-sm text-gray-600">Students: {room.students.length} / {room.capacity}</p>
-                            <div className="flex justify-end">
-                                <button className="bg-red-700 text-white font-medium border rounded-md p-2" onClick={(e) => { e.stopPropagation(); handleDeleteRoom(room.id) }}>
-                                    Delete Room
-                                </button>
-                            </div>
+                            {editingRoomId === room.id ? (
+                                <form className="flex flex-col gap-2" onSubmit={handleUpdateRoom}>
+                                    <input
+                                        type="text"
+                                        value={editRoomNumber}
+                                        onChange={(e) => setEditRoomNumber(e.target.value)}
+                                        className="border p-2 rounded text-black"
+                                        placeholder="Room Number"
+                                        required
+                                    />
+                                    <input
+                                        type="number"
+                                        value={editFloorNumber}
+                                        onChange={(e) => setEditFloorNumber(e.target.value)}
+                                        className="border p-2 rounded text-black"
+                                        placeholder="Floor Number"
+                                        min={1}
+                                        required
+                                    />
+                                    <input
+                                        type="number"
+                                        value={editCapacity}
+                                        onChange={(e) => setEditCapacity(e.target.value)}
+                                        className="border p-2 rounded text-black"
+                                        placeholder="Capacity"
+                                        min={1}
+                                        required
+                                    />
+                                    <div className="flex gap-2 justify-end">
+                                        <button
+                                            type="submit"
+                                            className="bg-green-700 text-white px-4 py-2 rounded"
+                                        >
+                                            Save
+                                        </button>
+                                        <button
+                                            type="button"
+                                            className="bg-gray-500 text-white px-4 py-2 rounded"
+                                            onClick={(e) => { e.stopPropagation(); setEditingRoomId(null); }}
+                                        >
+                                            Cancel
+                                        </button>
+                                    </div>
+                                </form>
+                            ) : (
+                                <>
+                                    <h3 className="text-lg font-semibold">Room {room.roomNumber}</h3>
+                                    <p className="text-sm text-gray-600">Floor: {room.floorNumber}</p>
+                                    <p className="text-sm text-gray-600">Capacity: {room.capacity}</p>
+                                    <p className="text-sm text-gray-600">Students: {room.students.length} / {room.capacity}</p>
+                                    <div className="flex justify-end gap-2 mt-3">
+                                        <button
+                                            className="bg-blue-600 text-white rounded-md px-4 py-2"
+                                            onClick={(e) => { e.stopPropagation(); handleEditRoom(room); }}
+                                        >
+                                            Edit
+                                        </button>
+                                        <button
+                                            className="bg-red-700 text-white rounded-md px-4 py-2"
+                                            onClick={(e) => { e.stopPropagation(); handleDeleteRoom(room.id); }}
+                                        >
+                                            Delete
+                                        </button>
+                                    </div>
+                                </>
+                            )}
                         </div>
                     ))}
                 </div>
