@@ -16,6 +16,15 @@ export default function Students() {
     const [phone, setPhone] = useState("");
     const [email, setEmail] = useState("");
 
+    // state to manage student edit form
+    const [editingStudentId, setEditingStudentId] = useState<number | null>(null);
+    const [editFirstName, setEditFirstName] = useState("");
+    const [editLastName, setEditLastName] = useState("");
+    const [editRegistrationNo, setEditRegistrationNo] = useState("");
+    const [editDepartment, setEditDepartment] = useState("");
+    const [editPhone, setEditPhone] = useState("");
+    const [editEmail, setEditEmail] = useState("");
+
     // This function fetch all student data based on hostelId and roomId
     async function fetchStudents() {
         const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
@@ -67,6 +76,39 @@ export default function Students() {
         );
         if (!response.ok) return;
         fetchStudents();
+    };
+
+    // this function opens editing form for a student and sets its current values
+    const handleEditStudent = (student: any) => {
+        setEditingStudentId(student.id);
+        setEditFirstName(student.firstName);
+        setEditLastName(student.lastName);
+        setEditRegistrationNo(student.registrationNo);
+        setEditDepartment(student.department);
+        setEditPhone(student.phone || "");
+        setEditEmail(student.email || "");
+    };
+
+    // this function submits edited data to backend
+    const handleUpdateStudent = async (e: React.FormEvent) => {
+        e.preventDefault();
+        const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
+        const response = await fetch(`${backendUrl}/api/students/${editingStudentId}`, {
+            method: "PUT",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+                firstName: editFirstName,
+                lastName: editLastName,
+                registrationNo: editRegistrationNo,
+                department: editDepartment,
+                phone: editPhone || null,
+                email: editEmail || null,
+            }),
+        });
+        if (response.ok) {
+            await fetchStudents();
+            setEditingStudentId(null);
+        }
     };
 
 
@@ -141,40 +183,117 @@ export default function Students() {
 
             {students && students.length > 0 ? (
                 <div className="flex flex-col gap-4">
-                    {students.map((student) => (
+                    {students.map((student: any) => (
                         <div
                             key={student.id}
-                            className="border rounded-md p-4 bg-white shadow-sm flex flex-col gap-2 cursor-pointer hover:shadow-md transition"
+                            className="border rounded-md p-4 bg-white shadow-sm text-black"
                         >
-                            <h3 className="text-lg font-semibold text-black">
-                                {student.firstName} {student.lastName}
-                            </h3>
+                            {editingStudentId === student.id ? (
+                                <form className="flex flex-col gap-2" onSubmit={handleUpdateStudent}>
+                                    <input
+                                        type="text"
+                                        value={editFirstName}
+                                        onChange={(e) => setEditFirstName(e.target.value)}
+                                        className="border p-2 rounded text-black"
+                                        placeholder="First Name"
+                                        required
+                                    />
+                                    <input
+                                        type="text"
+                                        value={editLastName}
+                                        onChange={(e) => setEditLastName(e.target.value)}
+                                        className="border p-2 rounded text-black"
+                                        placeholder="Last Name"
+                                        required
+                                    />
+                                    <input
+                                        type="text"
+                                        value={editRegistrationNo}
+                                        onChange={(e) => setEditRegistrationNo(e.target.value)}
+                                        className="border p-2 rounded text-black"
+                                        placeholder="Registration Number"
+                                        required
+                                    />
+                                    <input
+                                        type="text"
+                                        value={editDepartment}
+                                        onChange={(e) => setEditDepartment(e.target.value)}
+                                        className="border p-2 rounded text-black"
+                                        placeholder="Department"
+                                        required
+                                    />
+                                    <input
+                                        type="tel"
+                                        value={editPhone}
+                                        onChange={(e) => setEditPhone(e.target.value)}
+                                        className="border p-2 rounded text-black"
+                                        placeholder="Phone (Optional)"
+                                    />
+                                    <input
+                                        type="email"
+                                        value={editEmail}
+                                        onChange={(e) => setEditEmail(e.target.value)}
+                                        className="border p-2 rounded text-black"
+                                        placeholder="Email (Optional)"
+                                    />
+                                    <div className="flex gap-2 justify-end">
+                                        <button
+                                            type="submit"
+                                            className="bg-green-700 text-white px-4 py-2 rounded"
+                                        >
+                                            Save
+                                        </button>
+                                        <button
+                                            type="button"
+                                            className="bg-gray-500 text-white px-4 py-2 rounded"
+                                            onClick={(e) => { e.stopPropagation(); setEditingStudentId(null); }}
+                                        >
+                                            Cancel
+                                        </button>
+                                    </div>
+                                </form>
+                            ) : (
+                                <>
+                                    <h3 className="text-lg font-semibold text-black">
+                                        {student.firstName} {student.lastName}
+                                    </h3>
 
-                            <p className="text-sm text-gray-600">
-                                <span className="font-medium">Registration No:</span>{" "}
-                                {student.registrationNo}
-                            </p>
+                                    <p className="text-sm text-gray-600">
+                                        <span className="font-medium">Registration No:</span>{" "}
+                                        {student.registrationNo}
+                                    </p>
 
-                            <p className="text-sm text-gray-600">
-                                <span className="font-medium">Department:</span>{" "}
-                                {student.department}
-                            </p>
+                                    <p className="text-sm text-gray-600">
+                                        <span className="font-medium">Department:</span>{" "}
+                                        {student.department}
+                                    </p>
 
-                            <p className="text-sm text-gray-600">
-                                <span className="font-medium">Email:</span>{" "}
-                                {student.email}
-                            </p>
+                                    <p className="text-sm text-gray-600">
+                                        <span className="font-medium">Email:</span>{" "}
+                                        {student.email || "N/A"}
+                                    </p>
 
-                            <p className="text-sm text-gray-600">
-                                <span className="font-medium">Phone:</span>{" "}
-                                {student.phone}
-                            </p>
+                                    <p className="text-sm text-gray-600">
+                                        <span className="font-medium">Phone:</span>{" "}
+                                        {student.phone || "N/A"}
+                                    </p>
 
-                            <div className="flex justify-end">
-                                <button className="bg-red-700 text-white font-medium border rounded-md p-2" onClick={(e) => { e.stopPropagation(); handleDeleteStudent(student.id) }}>
-                                    Delete Student
-                                </button>
-                            </div>
+                                    <div className="flex justify-end gap-2 mt-3">
+                                        <button
+                                            className="bg-blue-600 text-white rounded-md px-4 py-2"
+                                            onClick={(e) => { e.stopPropagation(); handleEditStudent(student); }}
+                                        >
+                                            Edit
+                                        </button>
+                                        <button
+                                            className="bg-red-700 text-white rounded-md px-4 py-2"
+                                            onClick={(e) => { e.stopPropagation(); handleDeleteStudent(student.id); }}
+                                        >
+                                            Delete
+                                        </button>
+                                    </div>
+                                </>
+                            )}
                         </div>
                     ))}
                 </div>

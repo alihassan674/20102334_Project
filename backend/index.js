@@ -286,6 +286,44 @@ app.put("/api/rooms/:id", async (req, res) => {
     });
 });
 
+// this api will update student data with new data 
+app.put("/api/students/:id", async (req, res) => {
+
+    // getting id of student from frontend api request url
+    const { id } = req.params;
+
+    // taking updated data from frontend form data
+    const {
+        firstName,
+        lastName,
+        registrationNo,
+        department,
+        phone,
+        email,
+    } = req.body;
+
+    // update student data in 
+    const updatedStudent = await prisma.student.update({
+        where: {
+            id: Number(id),
+        },
+        data: {
+            firstName,
+            lastName,
+            registrationNo,
+            department,
+            phone: phone || null,
+            email: email || null,
+        },
+    });
+
+    return res.status(200).json({
+        success: true,
+        message: "Student updated successfully",
+        student: updatedStudent,
+    });
+});
+
 // --- Start Server ---
 app.listen(PORT, () => {
     console.log(`Server is running on http://localhost:${PORT}`);

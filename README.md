@@ -51,3 +51,5 @@ Reference: https://chatgpt.com/s/t_6a539389eeec8191805d256068bb434e
 Reference: https://chatgpt.com/s/t_6a5409d761e481918e2cbf21b8c5efea
 16) implemenent edit hostel api in backend for updating hostel data 
 Reference: https://chatgpt.com/s/t_6a546104cfd4819187b4ad85ab2a71ee
+17) implement edit room form and api using previous pattern
+18) implemented edit student form and api using previous pattern 
