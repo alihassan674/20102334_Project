@@ -1,5 +1,4 @@
-Hi Mr. Paul,
-My name is Ali Hassan and my student ID is 20102334,
+
 In this Readme file,
 1) About Project: I have explained each and every thing about Project
 2) Procedure of making the project: I have explained step by step procedure of making this project
@@ -9,7 +8,10 @@ In this Readme file,
 ====================== (1) About Project: =============================
 
 Introduction:
-Lodgely is website to help university hostel manangement , This website help you to manage universtiy hostel, room, and students. This website help you to get rid of paperwork, and manual records of students and rooms. You can manage your hostel, room, and students in a systematic way.
+Lodgely is a web-based hostel management system designed to help universities efficiently manage their hostel operations, including hostel details, rooms, and student records. The main purpose of this website is to provide a simple, organized, and digital solution for managing university accommodation facilities and reducing the dependency on traditional paperwork and manual record-keeping processes.
+With Lodgely, university administrators can easily manage hostel information, allocate rooms, maintain student records, and keep track of accommodation details in a systematic and efficient manner. The system helps to improve accuracy, save time, and reduce the chances of errors that commonly occur with manual management methods.
+This platform provides a centralized place where all hostel-related information can be stored, accessed, and updated whenever required. Instead of maintaining large amounts of physical files and registers, administrators can use Lodgely to manage student admissions, room availability, allocations, and other important hostel operations digitally.
+Lodgely aims to make hostel management easier, faster, and more reliable by providing an organized approach to handling university accommodation services. It improves the overall experience for both hostel administrators and students by ensuring that information is managed in a structured and accessible way.
 
 Technologies:
 Project contain:
